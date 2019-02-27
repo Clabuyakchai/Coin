@@ -91,14 +91,13 @@ public class CurrencyFragment extends BaseFragment implements CurrencyView, Favo
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_sort_by_usd:
-                //TODO
                 presenter.onSortByUSDClick();
                 return true;
             case R.id.menu_sort_by_volume:
                 presenter.onSortByVolumeClick();
                 return true;
             case R.id.menu_favorite:
-                    presenter.onCountFavoriteClick();
+                presenter.onCountFavoriteClick();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

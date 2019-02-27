@@ -28,17 +28,13 @@ public class CurrencyAdapter extends RecyclerView.Adapter<CurrencyHolder> {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item, parent, false);
         final CurrencyHolder holder = new CurrencyHolder(view);
 
-        //listener
         holder.getCurrencyFavorite()
-                .setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        int position = holder.getAdapterPosition();
-                        if(position != RecyclerView.NO_POSITION){
-                            latests.get(position).setFavorite(!latests.get(position).isFavorite());
-                            listener.changeFavoriteState(new Favorite(Integer.parseInt(latests.get(position).getId())));
-                            notifyItemChanged(position);
-                        }
+                .setOnClickListener(v -> {
+                    int position = holder.getAdapterPosition();
+                    if(position != RecyclerView.NO_POSITION){
+                        latests.get(position).setFavorite(!latests.get(position).isFavorite());
+                        listener.changeFavoriteState(new Favorite(Integer.parseInt(latests.get(position).getId())));
+                        notifyItemChanged(position);
                     }
                 });
 

@@ -45,12 +45,7 @@ public class LoginFragment extends MvpAppCompatFragment implements LoginView {
 
         signInButton = view.findViewById(R.id.sign_in_button);
         signInButton.setSize(SignInButton.SIZE_STANDARD);
-        signInButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                signIn();
-            }
-        });
+        signInButton.setOnClickListener(v -> signIn());
 
         return view;
     }
