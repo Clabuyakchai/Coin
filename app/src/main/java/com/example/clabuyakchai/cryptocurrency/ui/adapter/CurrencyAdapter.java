@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.clabuyakchai.cryptocurrency.R;
-import com.example.clabuyakchai.cryptocurrency.data.db.entity.Favorite;
+import com.example.clabuyakchai.cryptocurrency.data.local.entity.Favorite;
 import com.example.clabuyakchai.cryptocurrency.data.model.CurrencyLatest;
 import com.example.clabuyakchai.cryptocurrency.ui.holder.CurrencyHolder;
 

@@ -1,10 +1,10 @@
-package com.example.clabuyakchai.cryptocurrency.data.db;
+package com.example.clabuyakchai.cryptocurrency.data.local;
 
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.RoomDatabase;
 
-import com.example.clabuyakchai.cryptocurrency.data.db.dao.FavoriteDao;
-import com.example.clabuyakchai.cryptocurrency.data.db.entity.Favorite;
+import com.example.clabuyakchai.cryptocurrency.data.local.dao.FavoriteDao;
+import com.example.clabuyakchai.cryptocurrency.data.local.entity.Favorite;
 
 @Database(entities = {Favorite.class}, version = 1)
 public abstract class AppDatabase extends RoomDatabase {

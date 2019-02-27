@@ -1,4 +1,4 @@
-package com.example.clabuyakchai.cryptocurrency.data.db.entity;
+package com.example.clabuyakchai.cryptocurrency.data.local.entity;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;

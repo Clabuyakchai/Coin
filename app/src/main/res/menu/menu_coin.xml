@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/menu_sort_by_usd"
+        android:title="@string/sort_by_usd"
+        android:icon="@drawable/ic__money"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/menu_sort_by_volume"
+        android:title="@string/sort_by_volume"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/menu_favorite"
+        android:title="@string/count_favorite"
+        app:showAsAction="never"/>
+</menu>

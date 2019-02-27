@@ -20,7 +20,7 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 
-public class LoginFragment extends MvpAppCompatFragment implements ILoginView {
+public class LoginFragment extends MvpAppCompatFragment implements LoginView {
     private static final String TAG = "LoginFragment";
     private static final int RC_SIGN_IN = 900;
 

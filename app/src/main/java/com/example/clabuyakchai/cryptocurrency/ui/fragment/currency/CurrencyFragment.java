@@ -3,34 +3,45 @@ package com.example.clabuyakchai.cryptocurrency.ui.fragment.currency;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.example.clabuyakchai.cryptocurrency.R;
-import com.example.clabuyakchai.cryptocurrency.data.db.entity.Favorite;
+import com.example.clabuyakchai.cryptocurrency.data.local.entity.Favorite;
 import com.example.clabuyakchai.cryptocurrency.data.model.CurrencyLatest;
 import com.example.clabuyakchai.cryptocurrency.ui.adapter.CurrencyAdapter;
 import com.example.clabuyakchai.cryptocurrency.ui.adapter.FavoriteCallBack;
 import com.example.clabuyakchai.cryptocurrency.ui.base.BaseFragment;
-import com.example.clabuyakchai.cryptocurrency.ui.presenter.CurrencyPresenter;
+import com.example.clabuyakchai.cryptocurrency.ui.presenter.CurrencyPresenterImpl;
 
 import java.util.List;
 
 import javax.inject.Inject;
 
-public class CurrencyFragment extends BaseFragment implements ICurrencyView, FavoriteCallBack {
+public class CurrencyFragment extends BaseFragment implements CurrencyView, FavoriteCallBack {
 
     private RecyclerView recyclerView;
     private CurrencyAdapter adapter;
+
     @Inject
     @InjectPresenter
-    CurrencyPresenter presenter;
+    CurrencyPresenterImpl presenter;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
 
     @Nullable
     @Override
@@ -51,7 +62,7 @@ public class CurrencyFragment extends BaseFragment implements ICurrencyView, Fav
     }
 
     @ProvidePresenter
-    CurrencyPresenter getPresenter() {
+    CurrencyPresenterImpl providePresenter() {
         return presenter;
     }
 
@@ -60,14 +71,43 @@ public class CurrencyFragment extends BaseFragment implements ICurrencyView, Fav
         setRecyclerView(latests);
     }
 
-    private void setRecyclerView(List<CurrencyLatest> latests){
+    private void setRecyclerView(List<CurrencyLatest> latests) {
         adapter = new CurrencyAdapter(latests, this);
         recyclerView.setAdapter(adapter);
     }
 
     @Override
     public void changeFavoriteState(Favorite favorite) {
-        presenter.setFavorite(favorite);
+        presenter.updateFavorite(favorite);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.menu_coin, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_sort_by_usd:
+                //TODO
+                presenter.onSortByUSDClick();
+                return true;
+            case R.id.menu_sort_by_volume:
+                presenter.onSortByVolumeClick();
+                return true;
+            case R.id.menu_favorite:
+                    presenter.onCountFavoriteClick();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public void showSnackBar(String line) {
+        Snackbar.make(getView(), line, Snackbar.LENGTH_LONG).show();
     }
 
     @Override

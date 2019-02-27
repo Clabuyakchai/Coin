@@ -1,6 +1,5 @@
 package com.example.clabuyakchai.cryptocurrency;
 
-import com.example.clabuyakchai.cryptocurrency.di.component.AppComponent;
 import com.example.clabuyakchai.cryptocurrency.di.component.DaggerAppComponent;
 
 import dagger.android.AndroidInjector;
