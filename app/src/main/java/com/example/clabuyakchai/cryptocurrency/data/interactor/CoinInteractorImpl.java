@@ -21,8 +21,8 @@ public class CoinInteractorImpl implements CoinInteractor {
     }
 
     @Override
-    public Single<List<CurrencyLatest>> temp(String sort){
-        return repository.temp(sort);
+    public Single<List<CurrencyLatest>> getCurrencyFromApi(String sort){
+        return repository.getCurrencyFromApi(sort);
     }
 
     @Override
@@ -30,9 +30,8 @@ public class CoinInteractorImpl implements CoinInteractor {
         return repository.updateFavoriteInDb(favorite);
     }
 
-    //TODO delete
     @Override
-    public Single<List<Favorite>> getFavorite(){
-        return repository.getFavorite();
+    public Single<List<Favorite>> getFavoriteFromDb(){
+        return repository.getFavoriteFromDb();
     }
 }

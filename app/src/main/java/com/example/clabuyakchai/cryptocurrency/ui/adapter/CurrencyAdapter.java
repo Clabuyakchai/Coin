@@ -2,6 +2,7 @@ package com.example.clabuyakchai.cryptocurrency.ui.adapter;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,17 +29,26 @@ public class CurrencyAdapter extends RecyclerView.Adapter<CurrencyHolder> {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item, parent, false);
         final CurrencyHolder holder = new CurrencyHolder(view);
 
-        holder.getCurrencyFavorite()
+        holder.getCurrencyLike()
                 .setOnClickListener(v -> {
                     int position = holder.getAdapterPosition();
                     if(position != RecyclerView.NO_POSITION){
                         latests.get(position).setFavorite(!latests.get(position).isFavorite());
                         listener.changeFavoriteState(new Favorite(Integer.parseInt(latests.get(position).getId())));
-                        notifyItemChanged(position);
+                        notifyItemChanged(position, latests.get(position).isFavorite());
                     }
                 });
 
         return holder;
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull CurrencyHolder holder, int position, @NonNull List<Object> payloads) {
+        if(!payloads.isEmpty()){
+            holder.setCurrencyLike((Boolean) payloads.get(0));
+        }
+
+        super.onBindViewHolder(holder, position, payloads);
     }
 
     @Override

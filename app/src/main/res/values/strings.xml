@@ -3,4 +3,6 @@
     <string name="count_favorite">Favorite</string>
     <string name="sort_by_usd">Sort by USD</string>
     <string name="sort_by_volume">Sort by Volume</string>
+    <string name="format_price">%(.2</string>
+    <string name="sort_by_market_cap">Sort by Market Cap</string>
 </resources>

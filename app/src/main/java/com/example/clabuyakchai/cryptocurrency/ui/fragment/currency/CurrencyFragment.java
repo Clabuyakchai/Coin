@@ -67,7 +67,7 @@ public class CurrencyFragment extends BaseFragment implements CurrencyView, Favo
     }
 
     @Override
-    public void showCrypto(List<CurrencyLatest> latests) {
+    public void showCurrency(List<CurrencyLatest> latests) {
         setRecyclerView(latests);
     }
 
@@ -92,6 +92,9 @@ public class CurrencyFragment extends BaseFragment implements CurrencyView, Favo
         switch (item.getItemId()) {
             case R.id.menu_sort_by_usd:
                 presenter.onSortByUSDClick();
+                return true;
+            case R.id.menu_sort_by_market_cap:
+                presenter.onSortByMarketCap();
                 return true;
             case R.id.menu_sort_by_volume:
                 presenter.onSortByVolumeClick();

@@ -11,6 +11,11 @@ import javax.inject.Inject;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 
+import static com.example.clabuyakchai.cryptocurrency.util.SortUtil.MARKET_CAP;
+import static com.example.clabuyakchai.cryptocurrency.util.SortUtil.PRICE;
+import static com.example.clabuyakchai.cryptocurrency.util.SortUtil.SortDef;
+import static com.example.clabuyakchai.cryptocurrency.util.SortUtil.VOLUME_24H;
+
 @InjectViewState
 public class CurrencyPresenterImpl extends BasePresenter<CurrencyView> implements CurrencyPresenter {
 
@@ -23,13 +28,13 @@ public class CurrencyPresenterImpl extends BasePresenter<CurrencyView> implement
 
     @Override
     public void onViewCreated() {
-        requestToServer("market_cap");
+        requestToServer(MARKET_CAP);
     }
 
-    private void requestToServer(String sort) {
-        Disposable disposable = coinInteractor.temp(sort)
+    private void requestToServer(@SortDef String sort) {
+        Disposable disposable = coinInteractor.getCurrencyFromApi(sort)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(s -> getViewState().showCrypto(s), Throwable::printStackTrace);
+                .subscribe(s -> getViewState().showCurrency(s), Throwable::printStackTrace);
         compositeDisposable.add(disposable);
     }
 
@@ -42,18 +47,23 @@ public class CurrencyPresenterImpl extends BasePresenter<CurrencyView> implement
     }
 
     @Override
+    public void onSortByMarketCap() {
+        requestToServer(MARKET_CAP);
+    }
+
+    @Override
     public void onSortByUSDClick() {
-        requestToServer("price");
+        requestToServer(PRICE);
     }
 
     @Override
     public void onSortByVolumeClick() {
-        requestToServer("volume_24h");
+        requestToServer(VOLUME_24H);
     }
 
     @Override
     public void onCountFavoriteClick() {
-        Disposable disposable = coinInteractor.getFavorite()
+        Disposable disposable = coinInteractor.getFavoriteFromDb()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(s -> getViewState().showSnackBar(String.valueOf(s.size())));
         compositeDisposable.add(disposable);

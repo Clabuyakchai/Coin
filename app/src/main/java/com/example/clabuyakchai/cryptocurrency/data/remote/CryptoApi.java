@@ -11,7 +11,7 @@ import retrofit2.http.Query;
 
 public interface CryptoApi {
     @Headers("X-CMC_PRO_API_KEY:bd059841-89f5-4f03-bb83-495352e0ce24")
-    @GET("/v1/cryptocurrency/listings/latest?limit=10")
+    @GET("/v1/cryptocurrency/listings/latest?limit=50")
     Single<Latest> getCryptoLatest(@Query("sort") String sort);
 
     @Headers("X-CMC_PRO_API_KEY:bd059841-89f5-4f03-bb83-495352e0ce24")

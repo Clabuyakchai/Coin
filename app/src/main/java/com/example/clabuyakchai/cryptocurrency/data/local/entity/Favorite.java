@@ -2,6 +2,7 @@ package com.example.clabuyakchai.cryptocurrency.data.local.entity;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 
 @Entity(tableName = "favorite")
@@ -13,6 +14,7 @@ public class Favorite {
     public Favorite() {
     }
 
+    @Ignore
     public Favorite(int idCoin) {
         this.idCoin = idCoin;
     }

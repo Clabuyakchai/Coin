@@ -8,9 +8,9 @@ import com.example.clabuyakchai.cryptocurrency.ui.base.BaseView;
 
 import java.util.List;
 
-@StateStrategyType(AddToEndSingleStrategy.class)
+@StateStrategyType(OneExecutionStateStrategy.class)
 public interface CurrencyView extends BaseView {
-    void showCrypto(List<CurrencyLatest> latests);
+    void showCurrency(List<CurrencyLatest> latests);
     @StateStrategyType(OneExecutionStateStrategy.class)
     void showSnackBar(String line);
 }

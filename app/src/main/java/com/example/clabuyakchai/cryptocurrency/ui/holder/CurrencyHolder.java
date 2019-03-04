@@ -15,7 +15,7 @@ public class CurrencyHolder extends RecyclerView.ViewHolder {
     private TextView currencySymbol;
     private TextView currencyPrice;
     private TextView currencyPercentChange;
-    private ImageView currencyFavorite;
+    private ImageView currencyLike;
 
     public CurrencyHolder(View itemView) {
         super(itemView);
@@ -24,19 +24,24 @@ public class CurrencyHolder extends RecyclerView.ViewHolder {
         currencySymbol = itemView.findViewById(R.id.currency_symbol);
         currencyPrice = itemView.findViewById(R.id.currency_price);
         currencyPercentChange = itemView.findViewById(R.id.currency_percent_change);
-        currencyFavorite = itemView.findViewById(R.id.currency_favorite);
+        currencyLike = itemView.findViewById(R.id.currency_favorite);
     }
 
+    //TODO
     public void bind(CurrencyLatest latest) {
         currencySymbol.setText(latest.getSymbol());
-        currencyPrice.setText(String.valueOf(latest.getPrice()));
-        currencyPercentChange.setText(String.valueOf(latest.getPercentChange()));
+        currencyPrice.setText(String.format("\u0024%.2f", latest.getPrice()));
+        currencyPercentChange.setText(String.format("%.2f", latest.getPercentChange()) + "\u0025");
         Glide.with(currencyIcon.getContext()).load(latest.getLogo()).into(currencyIcon);
-        currencyFavorite.setImageResource(latest.isFavorite() ?
-                R.drawable.ic_favorite_red : R.drawable.ic_favorite_border);
+        setCurrencyLike(latest.isFavorite());
     }
 
-    public ImageView getCurrencyFavorite() {
-        return currencyFavorite;
+    public ImageView getCurrencyLike() {
+        return currencyLike;
+    }
+
+    public void setCurrencyLike(Boolean isFavorite) {
+        currencyLike.setImageResource(isFavorite ?
+                R.drawable.ic_favorite_red : R.drawable.ic_favorite_border_gray);
     }
 }

@@ -11,14 +11,11 @@ import com.example.clabuyakchai.cryptocurrency.data.local.entity.Favorite;
 
 import java.util.List;
 
-import io.reactivex.Completable;
-import io.reactivex.Maybe;
-import io.reactivex.Observable;
 import io.reactivex.Single;
 
 @Dao
 public interface FavoriteDao {
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(Favorite favorite);
 
     @Update

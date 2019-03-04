@@ -1,12 +1,15 @@
 package com.example.clabuyakchai.cryptocurrency.ui.activity.splash;
 
+import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.animation.AnimationSet;
 import android.view.animation.BounceInterpolator;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 
 import com.example.clabuyakchai.cryptocurrency.R;
@@ -41,10 +44,13 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void iconAnimation() {
-        ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(iconImage, View.TRANSLATION_Y, 50f, -50f, 0f);
-        objectAnimator.setInterpolator(new BounceInterpolator());
-        objectAnimator.setDuration(2000);
-        objectAnimator.start();
+        ObjectAnimator scaleX = ObjectAnimator.ofFloat(iconImage, View.SCALE_X, 0f, 1f);
+        ObjectAnimator scaleY = ObjectAnimator.ofFloat(iconImage, View.SCALE_Y, 0f, 1f);
+        AnimatorSet set = new AnimatorSet();
+        set.playTogether(scaleX, scaleY);
+        set.setDuration(2000);
+        set.setInterpolator(new DecelerateInterpolator());
+        set.start();
     }
 
     @Override

@@ -9,8 +9,7 @@ import io.reactivex.Completable;
 import io.reactivex.Single;
 
 public interface CoinRepository {
-    Single<List<CurrencyLatest>> temp(String sort);
+    Single<List<CurrencyLatest>> getCurrencyFromApi(String sort);
     Completable updateFavoriteInDb(Favorite favorite);
-    //TODO
-    Single<List<Favorite>> getFavorite();
+    Single<List<Favorite>> getFavoriteFromDb();
 }

@@ -17,8 +17,6 @@ import io.reactivex.Completable;
 import io.reactivex.Single;
 import io.reactivex.schedulers.Schedulers;
 
-
-//TODO придумать нормальные названия методам
 public class CoinRepositoryImpl implements CoinRepository {
 
     private final CryptoApi cryptoApi;
@@ -31,9 +29,8 @@ public class CoinRepositoryImpl implements CoinRepository {
     }
 
     @Override
-    public Single<List<CurrencyLatest>> temp(String sort) {
-        getFavorite();
-        Single<List<CurrencyLatest>> single = cryptoApi.getCryptoLatest(sort)
+    public Single<List<CurrencyLatest>> getCurrencyFromApi(String sort) {
+        Single<List<CurrencyLatest>> remote = cryptoApi.getCryptoLatest(sort)
                 .observeOn(Schedulers.io())
                 .flatMap(crypto -> {
                     List<CurrencyLatest> currencyLatest = mapCurrencyLatest(crypto);
@@ -41,11 +38,10 @@ public class CoinRepositoryImpl implements CoinRepository {
                             .flatMap(info -> Single.just(mapInfoToCurrencyLatest(info, currencyLatest)));
                 });
 
-        Single<List<Favorite>> single1 = appDatabase.favoriteDao().getFavorite()
+        Single<List<Favorite>> local = appDatabase.favoriteDao().getFavorite()
                 .observeOn(Schedulers.io());
 
-
-        return Single.zip(single, single1, this::map).subscribeOn(Schedulers.io());
+        return Single.zip(remote, local, this::addFavoriteInCurrencyLatest).subscribeOn(Schedulers.io());
     }
 
     private List<CurrencyLatest> mapCurrencyLatest(Latest latest) {
@@ -81,7 +77,7 @@ public class CoinRepositoryImpl implements CoinRepository {
         return csv.substring(0, csv.length() - SEPARATOR.length());
     }
 
-    private List<CurrencyLatest> map(List<CurrencyLatest> currencyLatests, List<Favorite> favorites) {
+    private List<CurrencyLatest> addFavoriteInCurrencyLatest(List<CurrencyLatest> currencyLatests, List<Favorite> favorites) {
         for (int i = 0; i < favorites.size(); i++) {
             for (int j = 0; j < currencyLatests.size(); j++) {
                 if (currencyLatests.get(j).getId().equals(String.valueOf(favorites.get(i).getIdCoin()))) {
@@ -93,31 +89,27 @@ public class CoinRepositoryImpl implements CoinRepository {
         return currencyLatests;
     }
 
-    private Completable insertFavorite(Favorite favorite) {
+    private Completable insertFavoriteInDb(Favorite favorite) {
         return Completable.fromAction(() -> appDatabase.favoriteDao().insert(favorite))
                 .subscribeOn(Schedulers.io());
     }
 
-    private Completable deleteFavorite(Favorite favorite) {
+    private Completable deleteFavoriteInDb(Favorite favorite) {
         return Completable.fromAction(() -> appDatabase.favoriteDao().delete(favorite))
                 .subscribeOn(Schedulers.io());
     }
 
-    //обрабатывать должен presenter
     //TODO обрабатывать EmptyResultSetException
     @Override
     public Completable updateFavoriteInDb(Favorite favorite) {
         return appDatabase.favoriteDao().getFavoriteById(favorite.getIdCoin())
                 .subscribeOn(Schedulers.io())
-                .flatMapCompletable(fav -> deleteFavorite(favorite))
-                .onErrorResumeNext(throwable -> insertFavorite(favorite));
+                .flatMapCompletable(fav -> deleteFavoriteInDb(favorite))
+                .onErrorResumeNext(throwable -> insertFavoriteInDb(favorite));
 
     }
 
-    //TODO почитать про payload в адаптере recycler
-
-    //TODO
-    public Single<List<Favorite>> getFavorite() {
+    public Single<List<Favorite>> getFavoriteFromDb() {
         return appDatabase.favoriteDao().getFavorite().subscribeOn(Schedulers.io());
     }
 }
