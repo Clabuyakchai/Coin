@@ -13,6 +13,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
@@ -32,6 +33,7 @@ public class CurrencyFragment extends BaseFragment implements CurrencyView, Favo
 
     private RecyclerView recyclerView;
     private CurrencyAdapter adapter;
+    private ProgressBar progressBar;
 
     @Inject
     @InjectPresenter
@@ -53,6 +55,8 @@ public class CurrencyFragment extends BaseFragment implements CurrencyView, Favo
         recyclerView.addItemDecoration(new DividerItemDecoration(getContext(),
                 DividerItemDecoration.VERTICAL));
 
+        progressBar = view.findViewById(R.id.progress);
+
         presenter.onViewCreated();
         return view;
     }
@@ -69,6 +73,7 @@ public class CurrencyFragment extends BaseFragment implements CurrencyView, Favo
     @Override
     public void showCurrency(List<CurrencyLatest> latests) {
         setRecyclerView(latests);
+        presenter.onStopProgressBar();
     }
 
     private void setRecyclerView(List<CurrencyLatest> latests) {
@@ -113,8 +118,18 @@ public class CurrencyFragment extends BaseFragment implements CurrencyView, Favo
     }
 
     @Override
-    public void onDestroy() {
+    public void startProgressBar() {
+        progressBar.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void stopProgressBar() {
+        progressBar.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onDestroyView() {
         presenter.onViewDestroy();
-        super.onDestroy();
+        super.onDestroyView();
     }
 }

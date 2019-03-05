@@ -31,7 +31,7 @@ public class CoinRepositoryImpl implements CoinRepository {
     @Override
     public Single<List<CurrencyLatest>> getCurrencyFromApi(String sort) {
         Single<List<CurrencyLatest>> remote = cryptoApi.getCryptoLatest(sort)
-                .observeOn(Schedulers.io())
+                .subscribeOn(Schedulers.io())
                 .flatMap(crypto -> {
                     List<CurrencyLatest> currencyLatest = mapCurrencyLatest(crypto);
                     return cryptoApi.getCryptoInfo(query(currencyLatest))
@@ -39,7 +39,7 @@ public class CoinRepositoryImpl implements CoinRepository {
                 });
 
         Single<List<Favorite>> local = appDatabase.favoriteDao().getFavorite()
-                .observeOn(Schedulers.io());
+                .subscribeOn(Schedulers.io());
 
         return Single.zip(remote, local, this::addFavoriteInCurrencyLatest).subscribeOn(Schedulers.io());
     }

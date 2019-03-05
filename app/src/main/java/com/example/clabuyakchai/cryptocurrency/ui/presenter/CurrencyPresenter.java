@@ -8,4 +8,6 @@ public interface CurrencyPresenter {
     void onSortByUSDClick();
     void onSortByVolumeClick();
     void onCountFavoriteClick();
+    void onStartProgressBar();
+    void onStopProgressBar();
 }
