@@ -1,5 +1,6 @@
 package com.example.clabuyakchai.cryptocurrency.ui.presenter;
 
+import android.arch.persistence.room.EmptyResultSetException;
 import android.util.Log;
 
 import com.arellomobile.mvp.InjectViewState;
@@ -50,7 +51,7 @@ public class CurrencyPresenterImpl extends BasePresenter<CurrencyView> implement
     public void updateFavorite(Favorite favorite) {
         Disposable disposable = coinInteractor.updateFavoriteInDb(favorite)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe();
+                .subscribe(() -> {}, throwable -> new EmptyResultSetException("exception"));
         compositeDisposable.add(disposable);
     }
 

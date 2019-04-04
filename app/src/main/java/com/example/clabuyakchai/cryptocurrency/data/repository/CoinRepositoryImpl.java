@@ -1,5 +1,7 @@
 package com.example.clabuyakchai.cryptocurrency.data.repository;
 
+import android.arch.persistence.room.EmptyResultSetException;
+
 import com.example.clabuyakchai.cryptocurrency.data.local.AppDatabase;
 import com.example.clabuyakchai.cryptocurrency.data.local.entity.Favorite;
 import com.example.clabuyakchai.cryptocurrency.data.model.CurrencyLatest;
@@ -99,14 +101,12 @@ public class CoinRepositoryImpl implements CoinRepository {
                 .subscribeOn(Schedulers.io());
     }
 
-    //TODO обрабатывать EmptyResultSetException
     @Override
     public Completable updateFavoriteInDb(Favorite favorite) {
         return appDatabase.favoriteDao().getFavoriteById(favorite.getIdCoin())
                 .subscribeOn(Schedulers.io())
                 .flatMapCompletable(fav -> deleteFavoriteInDb(favorite))
                 .onErrorResumeNext(throwable -> insertFavoriteInDb(favorite));
-
     }
 
     public Single<List<Favorite>> getFavoriteFromDb() {

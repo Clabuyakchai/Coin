@@ -2,7 +2,8 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <ImageView
         android:id="@+id/currency_icon"
@@ -19,11 +20,22 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="DASH"
+        tools:text="DASH"
         app:layout_constraintBottom_toTopOf="@+id/guideline_bottom"
         app:layout_constraintEnd_toStartOf="@id/barrier_icon"
         app:layout_constraintStart_toEndOf="@id/guideline_left"
         app:layout_constraintTop_toBottomOf="@id/currency_icon" />
+
+    <ImageView
+        android:id="@+id/currency_up_or_down"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginBottom="30dp"
+        app:layout_constraintStart_toEndOf="@id/barrier_icon"
+        app:layout_constraintTop_toBottomOf="@id/guideline_top"
+        app:layout_constraintBottom_toTopOf="@id/guideline_bottom"
+        android:contentDescription="@string/currency_up_or_down" />
 
     <TextView
         android:id="@+id/currency_price"
@@ -32,7 +44,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="25dp"
         android:layout_marginBottom="4dp"
-        android:text="21244,70"
+        tools:text="21244,70"
         app:layout_constraintBottom_toTopOf="@id/currency_percent_change"
         app:layout_constraintEnd_toStartOf="@id/barrier_favorite"
         app:layout_constraintTop_toBottomOf="@id/guideline_top"
@@ -44,7 +56,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:text="-0.15\u0025"
+        tools:text="-0.15\u0025"
         app:layout_constraintBottom_toTopOf="@id/guideline_bottom"
         app:layout_constraintEnd_toEndOf="@id/currency_price"
         app:layout_constraintTop_toBottomOf="@id/currency_price" />

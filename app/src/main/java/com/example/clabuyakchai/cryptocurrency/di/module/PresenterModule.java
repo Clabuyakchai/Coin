@@ -1,8 +1,5 @@
 package com.example.clabuyakchai.cryptocurrency.di.module;
 
-import android.content.Context;
-
-import com.example.clabuyakchai.cryptocurrency.AndroidSampleApplication;
 import com.example.clabuyakchai.cryptocurrency.data.interactor.CoinInteractor;
 import com.example.clabuyakchai.cryptocurrency.data.interactor.CoinInteractorImpl;
 import com.example.clabuyakchai.cryptocurrency.data.local.AppDatabase;
@@ -13,13 +10,26 @@ import com.example.clabuyakchai.cryptocurrency.ui.presenter.CurrencyPresenterImp
 
 import javax.inject.Singleton;
 
-import dagger.Binds;
 import dagger.Module;
 import dagger.Provides;
 
 @Module
-public abstract class ApplicationModule {
+public class PresenterModule {
     @Singleton
-    @Binds
-    public abstract Context provideContext(AndroidSampleApplication androidSampleApplication);
+    @Provides
+    public CoinRepository provideCoinRepository(CryptoApi cryptoApi, AppDatabase appDatabase){
+        return new CoinRepositoryImpl(cryptoApi, appDatabase);
+    }
+
+    @Singleton
+    @Provides
+    public CoinInteractor provideCoinInteractor(CoinRepository coinRepository){
+        return new CoinInteractorImpl(coinRepository);
+    }
+
+    @Singleton
+    @Provides
+    public CurrencyPresenterImpl provideCurrencyPresenter(CoinInteractor coinInteractor){
+        return new CurrencyPresenterImpl(coinInteractor);
+    }
 }

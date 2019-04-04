@@ -8,7 +8,7 @@ import com.example.clabuyakchai.cryptocurrency.ui.fragment.login.LoginView;
 public class LoginPresenterImpl extends BasePresenter<LoginView> {
     @Override
     public void onViewCreated() {
-
+        super.onViewCreated();
     }
 
     @Override

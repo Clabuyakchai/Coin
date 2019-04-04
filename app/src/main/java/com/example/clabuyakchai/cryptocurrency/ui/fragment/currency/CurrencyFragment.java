@@ -32,7 +32,6 @@ import javax.inject.Inject;
 public class CurrencyFragment extends BaseFragment implements CurrencyView, FavoriteCallBack {
 
     private RecyclerView recyclerView;
-    private CurrencyAdapter adapter;
     private ProgressBar progressBar;
 
     @Inject
@@ -77,7 +76,7 @@ public class CurrencyFragment extends BaseFragment implements CurrencyView, Favo
     }
 
     private void setRecyclerView(List<CurrencyLatest> latests) {
-        adapter = new CurrencyAdapter(latests, this);
+        CurrencyAdapter adapter = new CurrencyAdapter(latests, this);
         recyclerView.setAdapter(adapter);
     }
 
